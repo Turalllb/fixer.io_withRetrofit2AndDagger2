@@ -9,16 +9,19 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.List;
 
+import mobiledimension.exchangerates.data.db.model.ModelData;
+
+
 /**
  * Created by Турал on 30.11.2017.
  */
 
-class AdapterModelData extends ArrayAdapter<ModelData> {
+public class AdapterModelData extends ArrayAdapter<ModelData> {
     private List<ModelData> modelDataList;
     private LayoutInflater inflater;
     private int layout;
 
-    AdapterModelData(Context context, int resources, List<ModelData> modelData) {
+   public AdapterModelData(Context context, int resources, List<ModelData> modelData) {
         super(context, resources, modelData);
         this.layout = resources;
         this.modelDataList = modelData;
@@ -51,7 +54,7 @@ class AdapterModelData extends ArrayAdapter<ModelData> {
     }
 
 
-    void refresh() {
+   public void refresh() {
         this.notifyDataSetChanged();
     }
 

@@ -77,7 +77,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="mobiledimension.exchangerates.FragmentSocialNetworks"
+        android:name="mobiledimension.exchangerates.ui.SocialNetwork.FragmentSocialNetworks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ListView"
