@@ -11,17 +11,17 @@ import mobiledimension.exchangerates.ui.MainMenu.MainView;
 
 public interface MainPresenter<V extends MainView> extends MvpPresenter<V> {
 
-    void onChangedSortType();
-
-    void onDatePicked();
+    void onChangedSortType(int checkedId);
 
     List<String> getCurrencies();
 
     List<ModelData> getRates();
 
-    void currencyChanged();
+    void currencyChanged(int position);
 
-    String getCurrentDate();
+    void onDatePicked(String formattedDate);
+
+    void setCurrentDate(String currentDate);
 
     String getCurrentCurrency();
 

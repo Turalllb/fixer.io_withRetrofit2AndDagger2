@@ -9,7 +9,7 @@ import mobiledimension.exchangerates.di.module.AppModule;
 
 public class MyApplication extends Application {
 
-    private  AppComponent appComponent;
+    private static AppComponent appComponent;
 
     @Override
     public void onCreate() {
@@ -21,7 +21,7 @@ public class MyApplication extends Application {
 
     }
 
-    public  AppComponent getAppComponent(){
+    public static AppComponent getAppComponent(){
         return appComponent;
     }
 

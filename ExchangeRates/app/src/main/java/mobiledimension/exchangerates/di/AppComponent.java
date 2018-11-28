@@ -10,6 +10,7 @@ import mobiledimension.exchangerates.data.network.ApiFixer;
 import mobiledimension.exchangerates.di.module.AppModule;
 import mobiledimension.exchangerates.di.module.DbModule;
 import mobiledimension.exchangerates.di.module.PathModule;
+import mobiledimension.exchangerates.presenter.MainMenu.MainMenuPresenter;
 import mobiledimension.exchangerates.presenter.MainMenu.MainPresenter;
 import mobiledimension.exchangerates.presenter.SocialNetwork.SocialNetworkPresenter;
 import mobiledimension.exchangerates.ui.MainMenu.MainMenu;
@@ -24,7 +25,6 @@ public interface AppComponent {
 
     MainPresenter<MainView> mainPresenter();
 
-    SocialNetworkPresenter<SocialNetworkView> socialNetworkPresenter();
-
+    MainMenuPresenter<MainView> mainMenuPresenter();
 
 }

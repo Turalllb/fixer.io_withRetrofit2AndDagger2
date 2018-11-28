@@ -18,9 +18,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import mobiledimension.exchangerates.R;
+import mobiledimension.exchangerates.di.DaggerFragmentComponent;
+import mobiledimension.exchangerates.di.FragmentComponent;
 import mobiledimension.exchangerates.presenter.SocialNetwork.SocialNetworkPresenter;
 
-import static mobiledimension.exchangerates.ui.MainMenu.MainMenu.getActivityComponent;
+import static mobiledimension.exchangerates.MyApplication.getAppComponent;
+
 
 /**
  * Created by Турал on 11.12.2017.
@@ -32,11 +35,15 @@ public class FragmentSocialNetworks extends Fragment implements SocialNetworkVie
     SocialNetworkPresenter<SocialNetworkView> socialNetworkPresenter;
     SocialNetworkManager socialNetworkManager;
     private final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
+    FragmentComponent fragmentComponent;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment, null);
 
-        getActivityComponent().inject(this);
+        fragmentComponent = DaggerFragmentComponent.builder()
+                .appComponent(getAppComponent())
+                .build();
+        fragmentComponent.inject(this);
 
 
         socialNetworkManager = (SocialNetworkManager) getFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);

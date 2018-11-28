@@ -1,15 +1,8 @@
 package mobiledimension.exchangerates.presenter.MainMenu;
 
-import android.app.DatePickerDialog;
-import android.text.format.DateFormat;
-import android.widget.DatePicker;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -19,7 +12,6 @@ import mobiledimension.exchangerates.data.DataManager;
 import mobiledimension.exchangerates.data.db.model.ModelData;
 import mobiledimension.exchangerates.data.db.model.PostModel;
 import mobiledimension.exchangerates.presenter.base.BasePresenter;
-import mobiledimension.exchangerates.ui.DataPickerFragment.DatePickerFragment;
 import mobiledimension.exchangerates.ui.MainMenu.MainView;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,53 +20,37 @@ import retrofit2.Response;
 import static mobiledimension.exchangerates.data.db.model.ModelData.COMPARATOR_NAME;
 import static mobiledimension.exchangerates.data.db.model.ModelData.COMPARATOR_VALUE_ASCENDING;
 import static mobiledimension.exchangerates.data.db.model.ModelData.COMPARATOR_VALUE_DESCENDING;
-import static mobiledimension.exchangerates.ui.DataPickerFragment.DatePickerFragment.isFirstCall;
 
 
 public class MainMenuPresenter<V extends MainView> extends BasePresenter<V>
-        implements MainPresenter<V>, DatePickerDialog.OnDateSetListener {
+        implements MainPresenter<V> {
 
     public static final String LOG_TAG = "myLogs";
     private final String ACCESS_KEY = "0cd4416cd335bb08486b95e597b8c6b3"; //Для доступа к апи сайта. Есть ограничения в бесплатной версии.
-    private String currentDate;
     private String currentCurrency = "EUR";
     private List<ModelData> ratesArrayList = new ArrayList<>(); //список из моделей (валюта курс)
     private List<String> currenciesArrayList = new ArrayList<>(Arrays.asList("EUR")); //Список валют для спиннера
+    private int checkedId;
     private DataManager dataManager;
-
+    private String currentDate;
 
 
     @Inject
     MainMenuPresenter(DataManager dataManager) {
         this.dataManager = dataManager;
-        currentDate = DateFormat.format("yyyy-MM-dd", new Date()).toString();
+    }
+
+    @Override
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
 
     @Override
-    public String getCurrentDate() {
-        return currentDate;
-    }
-
-    @Override
-    public void currencyChanged() {
-        currentCurrency = currenciesArrayList.get(getView().getSelectedCurrencyPosition());
+    public void currencyChanged(int position) {
+        currentCurrency = currenciesArrayList.get(position);
         uploadData();
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        if (isFirstCall) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year, month, dayOfMonth);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = sdf.format(calendar.getTime());
-            getView().setDate(formattedDate);
-            currentDate = formattedDate;
-            uploadData();
-
-            isFirstCall = false;
-        }
+        getView().refreshAdapterModelDate();
     }
 
 
@@ -128,19 +104,22 @@ public class MainMenuPresenter<V extends MainView> extends BasePresenter<V>
         getView().refreshAdapterModelDate();
     }
 
-    @Override
-    public void onDatePicked() {
 
+    @Override
+    public void onDatePicked(String date) {
+        currentDate = date;
+        uploadData();
     }
 
 
-    public void onChangedSortType() {
+    public void onChangedSortType(int checkedId) {
+        this.checkedId = checkedId;
         sorting();
         getView().refreshAdapterModelDate();
     }
 
     private void sorting() {
-        switch (getView().getCheckedRadioButtonId()) {
+        switch (checkedId) {
             case R.id.radioButton1:
                 Collections.sort(ratesArrayList, COMPARATOR_NAME);
                 break;
@@ -164,10 +143,7 @@ public class MainMenuPresenter<V extends MainView> extends BasePresenter<V>
     }
 
     @Override
-    public String getCurrentCurrency() {
+    public String getCurrentCurrency(){
         return currentCurrency;
     }
-
-
-
 }

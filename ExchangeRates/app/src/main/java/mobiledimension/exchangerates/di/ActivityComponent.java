@@ -14,8 +14,4 @@ public interface ActivityComponent {
 
     void inject(MainMenu mainMenu);
 
-    void inject(FragmentSocialNetworks fragmentSocialNetworks);
-
-
-
 }
