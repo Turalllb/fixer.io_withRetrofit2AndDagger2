@@ -20,13 +20,13 @@ public class AppModule {
     }
 
     @Provides
-    public Context provideContext() {
+    Context provideContext() {
         return context;
     }
 
     @Provides
     @Singleton
-    public MainPresenter<MainView> provideMainPresenter(MainMenuPresenter<MainView> presenter) {
+    MainPresenter<MainView> provideMainPresenter(MainMenuPresenter<MainView> presenter) {
         return presenter;
     }
 

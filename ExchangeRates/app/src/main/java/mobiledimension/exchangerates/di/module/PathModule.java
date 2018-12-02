@@ -10,7 +10,7 @@ import dagger.Provides;
 public class PathModule {
 
     @Provides
-    public String getPath(Context context) {
+    String getPath(Context context) {
         //Проверяем наличие внешней памяти и возращаем путь для создания БД
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {

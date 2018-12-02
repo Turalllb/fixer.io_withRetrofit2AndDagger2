@@ -1,7 +1,6 @@
 package mobiledimension.exchangerates.ui.MainMenu;
 
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +25,6 @@ import mobiledimension.exchangerates.Utils.NetworkChangeReceiver;
 import mobiledimension.exchangerates.di.ActivityComponent;
 import mobiledimension.exchangerates.di.DaggerActivityComponent;
 import mobiledimension.exchangerates.presenter.MainMenu.MainPresenter;
-import mobiledimension.exchangerates.presenter.MainMenu.NoView;
 import mobiledimension.exchangerates.ui.DataPickerFragment.DatePickerFragment;
 
 import static mobiledimension.exchangerates.MyApplication.getAppComponent;
@@ -48,7 +46,7 @@ public class MainMenu extends AppCompatActivity implements MainView, RadioGroup.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //постоянно портретная ориентация
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //постоянно портретная ориентация
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);  //приложение на полный экран
 
         ActivityComponent activityComponent = DaggerActivityComponent.builder()
@@ -56,7 +54,7 @@ public class MainMenu extends AppCompatActivity implements MainView, RadioGroup.
                 .build();
         activityComponent.inject(this);
 
-
+        System.out.println("onCreate");
 
 
         //region findViewById
@@ -68,7 +66,7 @@ public class MainMenu extends AppCompatActivity implements MainView, RadioGroup.
 
         //Предварительная установка текущей даты.
         String date = DateFormat.format("yyyy-MM-dd", new Date()).toString();
-        currentDate.setText(date);
+        // currentDate.setText(date);
         mainPresenter.setCurrentDate(date);
 
 
@@ -79,8 +77,20 @@ public class MainMenu extends AppCompatActivity implements MainView, RadioGroup.
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOfCurrencies.setAdapter(spinnerAdapter);
 
+
         spinnerOfCurrencies.setOnItemSelectedListener(this);
         sortRadioGroup.setOnCheckedChangeListener(this);
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedState) {
+        super.onRestoreInstanceState(savedState);
     }
 
 
@@ -103,6 +113,7 @@ public class MainMenu extends AppCompatActivity implements MainView, RadioGroup.
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mainPresenter.currencyChanged(position);
+        System.out.println("СПиннер");
     }
 
     @Override

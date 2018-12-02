@@ -11,15 +11,14 @@ import mobiledimension.exchangerates.data.db.DbOpenHelper;
 @Module
 public class DbModule {
 
-
     @Provides
-    public SQLiteDatabase provideSQLiteDatabase(DbOpenHelper dbOpenHelper) {
+    SQLiteDatabase provideSQLiteDatabase(DbOpenHelper dbOpenHelper) {
         return dbOpenHelper.getWritableDatabase();
     }
 
     @Provides
-    public DbHelper provideDbHelper(AppDbHelper appDbHelper){
-        return  appDbHelper;
+    DbHelper provideDbHelper(AppDbHelper appDbHelper) {
+        return appDbHelper;
     }
 
 }

@@ -52,7 +52,8 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:text="@string/date"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:freezesText="true"/>
 
         <TextView
             android:id="@+id/currentDateTextView"

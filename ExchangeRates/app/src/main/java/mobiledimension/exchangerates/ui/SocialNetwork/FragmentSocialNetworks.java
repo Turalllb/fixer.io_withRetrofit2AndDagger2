@@ -73,7 +73,7 @@ public class FragmentSocialNetworks extends Fragment implements SocialNetworkVie
         VK_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                socialNetworkPresenter.vkShare();
+                socialNetworkPresenter.vkShare(getScreenshot(), socialNetworkManager);
             }
         });
 
@@ -99,9 +99,7 @@ public class FragmentSocialNetworks extends Fragment implements SocialNetworkVie
     }
 
 
-
-    @Override
-    public Bitmap getScreenshot() {
+    private Bitmap getScreenshot() {
         View rootView = getActivity().findViewById(android.R.id.content).getRootView();
         rootView.setDrawingCacheEnabled(true);
         return rootView.getDrawingCache();
@@ -124,11 +122,6 @@ public class FragmentSocialNetworks extends Fragment implements SocialNetworkVie
             }
         }
     }
-
-    public SocialNetworkManager getSocialNetworkManager() {
-        return socialNetworkManager;
-    }
-
 
 }
 

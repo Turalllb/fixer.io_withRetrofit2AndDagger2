@@ -8,7 +8,7 @@ import mobiledimension.exchangerates.Utils.NetworkChangeReceiver;
 public class ActivityModule {
 
     @Provides
-    public NetworkChangeReceiver provideNetworkChangeReceiver() {
+    NetworkChangeReceiver provideNetworkChangeReceiver() {
         return new NetworkChangeReceiver();
     }
 

@@ -3,6 +3,7 @@ package mobiledimension.exchangerates.presenter.SocialNetwork;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.github.gorbin.asne.core.listener.OnPostingCompleteListener;
 import com.github.gorbin.asne.vk.VkSocialNetwork;
 import com.vk.sdk.VKScope;
@@ -27,7 +28,7 @@ public class SocialNetwork<V extends SocialNetworkView> extends BasePresenter<V>
         @Override
         public void onPostSuccessfully(int socialNetworkID) {
             try {
-                //нет необходимости
+                getView().showToast("Опубликовано");
             } catch (NullPointerException e) {
                 e.printStackTrace();
             }
@@ -44,11 +45,10 @@ public class SocialNetwork<V extends SocialNetworkView> extends BasePresenter<V>
     }
 
     @Override
-    public void vkShare() {
+    public void vkShare(Bitmap screenshot,SocialNetworkManager socialNetworkManager) {
         int networkId = 0; //на случай если будут кнопки от других соц сетей
         networkId = VkSocialNetwork.ID;
-        Bitmap screenshot = getView().getScreenshot();
-        com.github.gorbin.asne.core.SocialNetwork socialNetwork = getView().getSocialNetworkManager().getSocialNetwork(networkId);
+        com.github.gorbin.asne.core.SocialNetwork socialNetwork = socialNetworkManager.getSocialNetwork(networkId);
         if (!socialNetwork.isConnected()) {
             if (networkId != 0) {
                 socialNetwork.requestLogin();
@@ -61,7 +61,7 @@ public class SocialNetwork<V extends SocialNetworkView> extends BasePresenter<V>
             postParams.putString(com.github.gorbin.asne.core.SocialNetwork.BUNDLE_LINK, "https://fixer.io");
 
             socialNetwork.requestPostPhotoMessageLink(screenshot, postParams, "ExchangeRates", postingComplete);
-            getView().showToast("Опубликовано");
+            getView().showToast("Отправка публикации");
         }
     }
 
